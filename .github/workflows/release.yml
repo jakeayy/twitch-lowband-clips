@@ -1,0 +1,56 @@
+# Builds the userscript on every push to main and publishes it to the release
+# for the version in package.json:
+#   - new version: creates tag v<version> and a release with the built files;
+#   - same version: moves the tag to this commit and replaces the files of the
+#     existing release.
+# Userscript managers read @updateURL/@downloadURL, which point at
+# releases/latest/download/…, so installed copies update when the version is
+# bumped.
+
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          tag="v${version}"
+          files=(dist/twitch-lowband-clips.user.js dist/twitch-lowband-clips.meta.js)
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -f "$tag"
+          git push -f origin "refs/tags/$tag"
+
+          if gh release view "$tag" > /dev/null 2>&1; then
+            gh release upload "$tag" "${files[@]}" --clobber
+          else
+            gh release create "$tag" "${files[@]}" --title "$tag" --generate-notes --latest
+          fi

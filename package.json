@@ -1,0 +1,35 @@
+{
+  "name": "twitch-lowband-clips",
+  "version": "2.1.0",
+  "description": "Makes Twitch's clip editor (in-player popup and clips.twitch.tv/create) load a low-quality preview instead of the 1080p source.",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakeayy/twitch-lowband-clips.git"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "typescript": "^5.8.0"
+  },
+  "userscript": {
+    "name": "Twitch Low-Bandwidth Clip Editor",
+    "namespace": "https://github.com/jakeayy/twitch-lowband-clips",
+    "homepageURL": "https://github.com/jakeayy/twitch-lowband-clips",
+    "supportURL": "https://github.com/jakeayy/twitch-lowband-clips/issues",
+    "updateURL": "https://github.com/jakeayy/twitch-lowband-clips/releases/latest/download/twitch-lowband-clips.meta.js",
+    "downloadURL": "https://github.com/jakeayy/twitch-lowband-clips/releases/latest/download/twitch-lowband-clips.user.js",
+    "match": [
+      "https://www.twitch.tv/*",
+      "https://clips.twitch.tv/*"
+    ],
+    "run-at": "document-start",
+    "inject-into": "page",
+    "grant": "none"
+  }
+}
