@@ -54,9 +54,10 @@ header on its own, which userscript managers fetch to check for updates.
 
 ## Releasing
 
-Every push to `main` runs `.github/workflows/release.yml`, which builds the
-script and publishes both files to the release for the version in
-`package.json`:
+Every push to `main` that changes the source, build config or dependencies
+runs `.github/workflows/release.yml`, which builds the script and publishes
+both files to the release for the version in `package.json` (pushes that only
+touch the README or LICENSE don't trigger it):
 
 - if `v<version>` doesn't exist yet, it creates that tag and a new release;
 - if it does, it moves the tag to the new commit and replaces the release's

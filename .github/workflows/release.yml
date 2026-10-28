@@ -1,5 +1,5 @@
-# Builds the userscript on every push to main and publishes it to the release
-# for the version in package.json:
+# Builds the userscript on pushes to main that change it, and publishes it to
+# the release for the version in package.json:
 #   - new version: creates tag v<version> and a release with the built files;
 #   - same version: moves the tag to this commit and replaces the files of the
 #     existing release.
@@ -12,6 +12,14 @@ name: Release
 on:
   push:
     branches: [main]
+    # Only files that affect the built userscript (README, LICENSE etc. don't).
+    paths:
+      - src/**
+      - build.mjs
+      - package.json
+      - package-lock.json
+      - tsconfig.json
+      - .github/workflows/release.yml
   workflow_dispatch:
 
 permissions:
