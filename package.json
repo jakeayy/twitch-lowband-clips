@@ -2,6 +2,7 @@
   "name": "twitch-lowband-clips",
   "version": "2.1.0",
   "description": "Makes Twitch's clip editor (in-player popup and clips.twitch.tv/create) load a low-quality preview instead of the 1080p source.",
+  "license": "MIT",
   "private": true,
   "type": "module",
   "repository": {

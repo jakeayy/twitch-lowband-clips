@@ -89,3 +89,7 @@ see `src/config.ts`.
 Open the browser console to see what the script did: it logs
 `[lowband-clips] using VOD … at 160p …` when the low-quality preview is used,
 and a warning when it falls back.
+
+## License
+
+MIT, see [LICENSE](LICENSE).

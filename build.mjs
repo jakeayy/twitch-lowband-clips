@@ -12,6 +12,7 @@ const header = () => {
     namespace: pkg.userscript.namespace,
     version: pkg.version,
     description: pkg.description,
+    license: pkg.license,
     ...Object.fromEntries(Object.entries(pkg.userscript).filter(([k]) => !['name', 'namespace'].includes(k))),
   };
   const width = Math.max(...Object.keys(meta).map((k) => k.length)) + 2;
